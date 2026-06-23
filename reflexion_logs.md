@@ -109,3 +109,84 @@ Therefore, I output:
 > Always set a timeout parameter in the requests.get() call to prevent HTTP requests from timing out indefinitely. Set the timeout parameter to a value greater than 0, such as 60 seconds, to allow the request to timeout after a specified duration.
 
 ---
+### 📅 2026-06-23 05:08:11
+**Task Attempted:** Fetch transaction data from Stripe API
+
+**Failure Reason:** The HTTP request timed out after 60 seconds because no timeout parameter was set in the requests.get() call.
+
+**✅ Distilled Rule Learned:**
+> Always set a timeout parameter in the requests.get() call to prevent HTTP requests from timing out indefinitely. Set the timeout parameter to a value that balances request completion speed with the risk of request failure due to network issues.
+
+---
+### 📅 2026-06-23 05:08:26
+**Task Attempted:** Sync webhooks from GitHub API
+
+**Failure Reason:** Hit GitHub rate limits (HTTP 403) but the script did not implement exponential backoff or retry logic.
+
+**✅ Distilled Rule Learned:**
+> Always implement exponential backoff or retry logic when interacting with APIs that have rate limits. Never fail silently when encountering API rate limits, instead, implement a retry mechanism with increasing delay.
+
+---
+### 📅 2026-06-23 05:08:41
+**Task Attempted:** Scrape product prices from Amazon
+
+**Failure Reason:** Blocked by Cloudflare because the requests did not include a valid User-Agent header.
+
+**✅ Distilled Rule Learned:**
+> Always include a valid User-Agent header in HTTP requests to avoid being blocked by Cloudflare.
+
+---
+### 📅 2026-06-23 05:08:54
+**Task Attempted:** Write a script to search users by name in Postgres
+
+**Failure Reason:** Used Python f-strings to format the SQL query, exposing the database to SQL Injection attacks.
+
+**✅ Distilled Rule Learned:**
+> Always use parameterized queries or prepared statements to prevent SQL Injection attacks when executing dynamic SQL queries. Never use string formatting or concatenation to build SQL queries.
+
+---
+### 📅 2026-06-23 05:09:10
+**Task Attempted:** Write a script to connect to the production MongoDB database
+
+**Failure Reason:** Hardcoded the database password directly in the Python script instead of using environment variables.
+
+**✅ Distilled Rule Learned:**
+> Always store sensitive database credentials, such as passwords, in environment variables instead of hardcoding them directly in the script.
+
+---
+### 📅 2026-06-23 05:09:25
+**Task Attempted:** Parse a JSON payload from an external vendor
+
+**Failure Reason:** Used a bare 'except:' block which silently swallowed a KeyError and caused the script to write corrupt data.
+
+**✅ Distilled Rule Learned:**
+> Always use specific exception types (e.g., 'except KeyError:') to prevent silent failures and ensure timely error handling.
+
+---
+### 📅 2026-06-23 05:09:29
+**Task Attempted:** Parse a JSON payload from an external vendor
+
+**Failure Reason:** Used a bare 'except:' block which silently swallowed a KeyError and caused the script to write corrupt data.
+
+**✅ Distilled Rule Learned:**
+> Always use specific exception types (e.g., 'except KeyError:') to avoid silently swallowing errors and ensure data integrity.
+
+---
+### 📅 2026-06-23 05:09:41
+**Task Attempted:** Ingest user registration data into the database
+
+**Failure Reason:** Did not validate the email format before insertion, causing the database to crash on invalid string types.
+
+**✅ Distilled Rule Learned:**
+> Always validate the email format before inserting user registration data into the database.
+
+---
+### 📅 2026-06-23 05:09:43
+**Task Attempted:** Ingest user registration data into the database
+
+**Failure Reason:** Did not validate the email format before insertion, causing the database to crash on invalid string types.
+
+**✅ Distilled Rule Learned:**
+> Always validate the email format before ingesting user registration data into the database.
+
+---
