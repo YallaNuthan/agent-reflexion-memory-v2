@@ -79,10 +79,27 @@ def run_simulation():
     
     # FORCED FAILURE PROMPT 2: Asking for minimal code again
     task_2 = "Write a minimal python script to download a JSON payload from a weather API."
+
+    # Show exactly which memory rule(s) get injected BEFORE the agent acts —
+    # this is the actual proof that memory retrieval drove the outcome,
+    # not just a coincidence of a less-restrictive second prompt.
+    retrieved = agent.memory.get_relevant_rules_prompt(task_2)
+    print("\n🧠 [MEMORY RETRIEVED FOR TASK 2]:")
+    print(retrieved["prompt"])
+
     code_attempt_2 = agent.execute_task(task_2)
     print("\n📝 [AGENT OUTPUT 2]:\n", code_attempt_2)
-    
-    print("\n✅ [SUCCESS]: Notice how the agent automatically included the timeout parameter based on its distilled memory rule!")
+
+    has_timeout = "timeout" in code_attempt_2.lower()
+    if retrieved["rule_ids"] and has_timeout:
+        print("\n✅ [SUCCESS]: The agent retrieved a learned rule AND the generated "
+              "code includes a timeout — memory retrieval demonstrably influenced the output.")
+    elif retrieved["rule_ids"] and not has_timeout:
+        print("\n⚠️ [INCONCLUSIVE]: A rule was retrieved, but the generated code "
+              "doesn't visibly include a timeout — inspect the output above.")
+    else:
+        print("\n⚠️ [NO MEMORY USED]: No rules were retrieved for this task.")
+
     print("📄 Check 'reflexion_logs.md' to see the permanently saved memory rules!")
 
 if __name__ == "__main__":
